@@ -46,10 +46,22 @@ REMOVE_ARQUIVO(){
         MENU
     fi
 }
+RENOMEAR(){
+    mv $1 $2
+    DRAW ls
+}
 VOLTAR(){
     CHECK=0
     CURRENT_FOLDER=''
     DRAW
+}
+COPIAR(){
+    cp $1 $2
+    DRAW ls
+}
+MOVER(){
+    mv $1 $2
+    DRAW ls
 }
 CONFIGURACOES(){
     # FORMATAÇÃO = https://misc.flogisoft.com/bash/tip_colors_and_formatting
@@ -113,6 +125,7 @@ DRAW(){
 MENU(){
     if [ $CHECK = 1 ]
         then
+        echo '0 - Voltar'
         echo '1 - Pasta inicial'
         echo '2 - Abrir pasta'
         echo '3 - Nova pasta'
@@ -120,7 +133,9 @@ MENU(){
         echo '5 - Novo arquivo'
         echo '6 - Abrir arquivo'
         echo '7 - Remover arquivo'
-        echo '8 - Voltar'
+        echo '8 - Renomear arquivo'
+        echo '9 - Copiar'
+        echo '10 - Copiar'
         echo 'Option: '
         read var
 
@@ -144,7 +159,22 @@ MENU(){
             7)  echo "Qual arquivo pra ser excluido"
                 read del_arquivo
                 REMOVE_ARQUIVO $del_arquivo;;
-            8)  VOLTAR;;
+            8)  echo "Qual arquivo/pasta renomear"
+                read arq_ini
+                echo "Digite o novo nome"
+                read arq_novo
+                RENOMEAR_ARQUIVO $arq_ini $arq_novo;;
+            9)  echo "Digite o nome do arquivo/pasta para copiar"
+                read copy
+                echo "Digite o diretório para ser copiado"
+                read copy_dir
+                COPIAR $copy $copy_dir;;
+            10) echo "Digite o nome do arquivo/pasta para copiar"
+                read move
+                echo "Digite o diretório para ser copiado"
+                read move_dir
+                MOVER $move $move_dir;;
+            0)  VOLTAR;;
             *)echo "INVALIDO"
         esac
     else
