@@ -32,8 +32,7 @@ CRIA_ARQUIVO(){
     DRAW ls   
 }
 ABRIR_ARQUIVO(){
-    var="$(cat $1)"
-    DRAW "echo \033[4m⤬ _ ⤢ ############################################################\033[24m\n$var\n##################################################################"
+    DRAW "cat $1"
 }
 REMOVE_ARQUIVO(){
     echo "Isso irá deletar permanentemente"
@@ -90,11 +89,11 @@ DESLIGAR(){
         for(( i=0; i<${#chars}; i++ )); do
             sleep 0.5
             clear
-            echo $COLOR'------------------------------------------------------------------'
-            date +" </>                     %H:%M%t%d-%m-%y"
-            echo '------------------------------------------------------------------\n'
-            echo "                        DESLIGANDO                             <${chars:$i:1}>" "\r"
-            echo '\n==================================================================\033[39m\n\n'
+            echo $COLOR $CLINES
+            date +" </>                            %H:%M%t%d-%m-%y"
+            echo $CLINES "\n"
+            echo "                                  DESLIGANDO                             <${chars:$i:1}>" "\r"
+            echo "\n"$CEQUAL '\033[39m\n\n'
         done
         ((COUNT++))
     done
@@ -104,11 +103,11 @@ DESLIGAR(){
 }
 DRAW(){
     clear
-    echo $COLOR'------------------------------------------------------------------'
-    date +" </>                     %H:%M%t%d-%m-%y"
-    echo '------------------------------------------------------------------'
+    echo $COLOR $CLINES
+    date +" </>                            %H:%M%t%d-%m-%y"
+    echo $CLINES
     $1
-    echo '==================================================================\033[39m\n\n'
+    echo "\n"$CEQUAL '\033[39m\n\n'
     MENU
 }
 MENU(){
@@ -169,5 +168,15 @@ MENU(){
 CURRENT_FOLDER=''
 CHECK=0
 COLOR=''
-
+CLINES=''
+CEQUAL=''
+COLUMNS="tput cols"
+for(( i=0; i<80; i++ )); do
+    NEW='-'
+    CLINES="$CLINES$NEW"
+done
+for(( i=0; i<80; i++ )); do
+    NEWE='='
+    CEQUAL="$CEQUAL$NEWE"
+done
 DRAW
