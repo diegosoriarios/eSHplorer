@@ -6,9 +6,14 @@ FOLDER(){
     DRAW ls
 }
 ABRIR_PASTA(){
-    cd $CURRENT_FOLDER/$1
-    CURRENT_FOLDER=$CURRENT_FOLDER/$1
-    DRAW ls
+    if [ -d "$CURRENT_FOLDER/$1" ]; then
+        cd $CURRENT_FOLDER/$1
+        CURRENT_FOLDER=$CURRENT_FOLDER/$1
+        DRAW ls
+    else
+        cd $CURRENT_FOLDER
+        DRAW ls
+    fi
 }
 CRIAR_PASTA(){
     cd $CURRENT_FOLDER
@@ -67,7 +72,7 @@ CONFIGURACOES(){
     # FORMATAÇÃO = https://misc.flogisoft.com/bash/tip_colors_and_formatting
     echo 'MUDAR A COR'
     echo '1 - Red'
-    echo '2 - Green'
+    echo '2 - Green' 
     echo '3 - Yellow'
     echo '4 - Blue'
     echo '5 - Magenta'
@@ -125,16 +130,11 @@ DRAW(){
 MENU(){
     if [ $CHECK = 1 ]
         then
-        echo '0 - Voltar'
-        echo '1 - Pasta inicial'
-        echo '2 - Abrir pasta'
-        echo '3 - Nova pasta'
-        echo '4 - Remover pasta'
-        echo '5 - Novo arquivo'
-        echo '6 - Abrir arquivo'
-        echo '7 - Remover arquivo'
-        echo '8 - Renomear arquivo'
-        echo '9 - Copiar'
+        echo '0 - Voltar\t\t1 - Pasta inicial'
+        echo '2 - Abrir pasta\t\t3 - Nova pasta'
+        echo '4 - Remover pasta\t5 - Novo arquivo'
+        echo '6 - Abrir arquivo\t7 - Remover arquivo'
+        echo '8 - Renomear arquivo\t9 - Copiar'
         echo '10 - Copiar'
         echo 'Option: '
         read var
